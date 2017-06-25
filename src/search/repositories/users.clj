@@ -14,8 +14,11 @@
       (update-in ["created_at"] parse-date-time)
       (update-in ["last_login_at"] parse-date-time)))
 
-(defn load-json []
-  (->> (io/resource "users.json")
-       slurp
-       json/parse-string
-       (map parse-user-dates)))
+(defn load-json
+  ([]
+   (load-json "users.json"))
+  ([path]
+   (->> (io/resource path)
+        io/reader
+        json/parse-stream 
+        (map parse-user-dates))))
