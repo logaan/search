@@ -12,11 +12,3 @@
     1 dec 0
     2 dec 1
     3 dec 2))
-
-(deftest backspace-deletes-last
-  (is (= [:set "fo"] (sut/text-input "foo" :backspace)))
-  (is (= [:set ""] (sut/text-input "" :backspace))))
-
-(deftest character-keys-get-appended
-  (is (= [:set "foo"] (sut/text-input "fo" \o)))
-  (is (= [:set "a"] (sut/text-input "" \a))))
