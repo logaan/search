@@ -1,24 +1,11 @@
 (ns search.repositories.users
-  (:require [cheshire.core :as json]
-            [clojure.java.io :as io]
-            [clj-time.format :as time]))
-
-(def date-time-format
-  (time/formatter "y-M-d'T'k:m:s Z"))
-
-(defn parse-date-time [date-time-string]
-  (time/parse date-time-format date-time-string))
+  (:require [search.repositories.common :as common]))
 
 (defn parse-user-dates [unparsed-user]
   (-> unparsed-user
-      (update-in ["created_at"] parse-date-time)
-      (update-in ["last_login_at"] parse-date-time)))
+      (update-in ["created_at"]    common/parse-date-time)
+      (update-in ["last_login_at"] common/parse-date-time)))
 
-(defn load-json
-  ([]
-   (load-json "users.json"))
-  ([path]
-   (->> (io/resource path)
-        io/reader
-        json/parse-stream 
-        (map parse-user-dates))))
+(defn load-json []
+  (->> (common/load-json "users.json")
+       (map parse-user-dates)))
