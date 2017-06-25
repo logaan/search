@@ -1,6 +1,13 @@
 (ns search.repositories.users-test
   (:require [search.repositories.users :as sut]
-            [clojure.test :as t]))
+            [clojure.test :refer [deftest is]]
+            [clj-time.core :as time]
+            [clj-time.format :as f]))
+
+(defn utc-date-time [year month day hour minute second timezone-offset]
+  (-> (time/date-time year month day hour minute second)
+      (time/from-time-zone (time/time-zone-for-offset timezone-offset))
+      (time/to-time-zone time/utc)))
 
 (def first-user
   {"_id"             1
@@ -8,13 +15,13 @@
    "external_id"     "74341f74-9c79-49d5-9611-87ef9b6eb75f"
    "name"            "Francisca Rasmussen"
    "alias"           "Miss Coffey"
-   "created_at"      "2016-04-15T05:19:46 -10:00"
+   "created_at"      (utc-date-time 2016 4 15 5 19 46 -10)
    "active"          true
    "verified"        true
    "shared"          false
    "locale"          "en-AU"
    "timezone"        "Sri Lanka"
-   "last_login_at"   "2013-08-04T01:03:27 -10:00"
+   "last_login_at"   (utc-date-time 2013 8 4 1 3 27 -10)
    "email"           "coffeyrasmussen@flotonic.com"
    "phone"           "8335-422-718"
    "signature"       "Don't Worry Be Happy!"
@@ -26,6 +33,10 @@
    "suspended"       true
    "role"            "admin"})
 
-(t/deftest loads-first-user
-  (t/is (= first-user
-           (first (sut/load-json)))))
+(deftest loads-first-user
+  (is (= first-user
+         (first (sut/load-json)))))
+
+(deftest parse-date-time
+  (is (= (utc-date-time 2016 4 15 5 19 46 -10)
+         (sut/parse-date-time "2016-04-15T05:19:46 -10:00"))))
