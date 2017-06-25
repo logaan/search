@@ -1,6 +1,7 @@
 (ns search.ui.core
   (:require [lanterna.screen :as s]
-            [search.ui.text :as text]))
+            [search.ui.text :as text]
+            [search.repositories.users :as users]))
 
 ;;- specific drawing -----------------------------------------------------------
 
@@ -11,19 +12,33 @@
   {:fg :white
    :bg :cyan})
 
+(def divider
+  "------------------------------------------------------------------------------")
+
+(defn draw-users [scr]
+  (let [users (users/load-json)
+        lines (range 8 22)]
+    (s/put-string scr 1 6 users/header)
+    (s/put-string scr 1 7 divider)
+    (dorun
+     (for [[line user] (map list lines users)]
+       (s/put-string scr 1 line (users/summarise user))))))
+
 (defn draw [{:keys [dataset field query table index]} scr]
   (let [focus (fields index)]
     (doto scr
-     (s/put-string 2 1 "Zendesk Search Coding Challenge" {:styles #{:bold}})
+     (s/put-string 1 0 "Zendesk Search Coding Challenge" {:styles #{:bold}})
 
-     (s/put-string 2 3 "Dataset:")
-     (text/field 11 3 dataset (= :dataset focus))
+     (s/put-string 1 2 "Dataset:")
+     (text/field 11 2 dataset (= :dataset focus))
 
-     (s/put-string 4 5 "Field:")
-     (text/field 11 5 field (= :field focus))
+     (s/put-string 4 3 "Field:")
+     (text/field 11 3 field (= :field focus))
 
-     (s/put-string 4 7 "Query:")
-     (text/field 11 7 query (= :query focus))
+     (s/put-string 4 4 "Query:")
+     (text/field 11 4 query (= :query focus))
+
+     (draw-users)
 
      (s/put-string 1 23 "    Quit       Next     Next           Previous")
      (s/put-string 1 23 "Esc" key-style)

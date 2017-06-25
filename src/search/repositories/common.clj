@@ -15,3 +15,6 @@
   (->> (io/resource path)
        io/reader
        json/parse-stream))
+
+(defn first-n [text n]
+  (apply str (take n text)))
