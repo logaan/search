@@ -1,6 +1,6 @@
 (ns search.ui.text-test
   (:require [search.ui.text :as sut]
-            [clojure.test :as t]))
+            [clojure.test :refer [deftest is]]))
 
 (deftest backspace-deletes-last
   (is (= [:set "fo"] (sut/input "foo" :backspace)))
