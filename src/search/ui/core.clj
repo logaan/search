@@ -10,8 +10,6 @@
 (defn draw [{:keys [dataset field query table index]} scr]
   (let [focus (fields index)]
     (doto scr
-     (s/clear)
-
      (s/put-string 2 1 "Zendesk Search Coding Challenge" {:styles #{:bold}})
 
      (s/put-string 2 3 "Dataset:")
@@ -59,5 +57,5 @@
 (comment
 
   (start)
-  
+
   )

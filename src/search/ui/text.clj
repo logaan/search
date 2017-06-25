@@ -18,9 +18,18 @@
     :backspace   [:set (remove-last input)]
     [:set (str input key)]))
 
+(defn last [input length]
+  (let [end   (count input)
+        start (max (- end length) 0)]
+    (subs input start end)))
+
+(def field-length 19)
+
 (defn field [scr x y value focused?]
-  (let [text-start (inc x)]
+  (let [end-of-text  (+ x (count value))
+        end-of-field (+ x field-length)
+        cursor-x     (min end-of-text end-of-field)]
     (s/put-string scr x y "                    " text-field-opts)
-    (s/put-string scr text-start y value text-field-opts)
+    (s/put-string scr x y (last value field-length) text-field-opts)
     (if focused?
-      (s/move-cursor scr (+ text-start (count value)) y))))
+      (s/move-cursor scr cursor-x y))))
