@@ -1,4 +1,4 @@
-(ns search.ui
+(ns search.ui.core
   (:require [lanterna.screen :as s]))
 
 ;;- text field -----------------------------------------------------------------
@@ -54,6 +54,9 @@
    :table   {}
    :index   0})
 
+(defn move-index [index direction]
+  (mod (direction index) (count fields)))
+
 (defn input-loop [scr]
   (loop [state initial-state]
     (draw state scr)
@@ -66,8 +69,8 @@
         (recur
          (case action
            :set  (assoc state focus value)
-           :next (update-in state [:index] inc)
-           :prev (update-in state [:index] dec)))))))
+           :next (update-in state [:index] move-index inc)
+           :prev (update-in state [:index] move-index dec)))))))
 
 (defn start []
   (let [scr (s/get-screen)]
@@ -76,5 +79,5 @@
 (comment
 
   (start)
-
+  
   )
