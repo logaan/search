@@ -1,6 +1,6 @@
 # search
 
-A Clojure library designed to ... well, that part is up to you.
+This is Logan Campbell's implementation of the Zendesk search code challenge.
 
 ## Usage
 
