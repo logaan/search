@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+echo "Clojure will take about 15 seconds to start"
+
+./scripts/lein run
