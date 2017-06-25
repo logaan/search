@@ -6,13 +6,18 @@
 (def text-field-opts
   {:styles #{:underline}})
 
+(defn remove-last [input]
+  (if (empty? input)
+    ""
+    (subs input 0 (dec (count input)))))
+
 (defn text-input [input key]
   (case key
     :enter       [:next input]
     :tab         [:next input]
     :escape      [:exit input]
     :reverse-tab [:prev input]
-    :backspace   [:set (subs input 0 (dec (count input)))]
+    :backspace   [:set (remove-last input)]
     [:set (str input key)]))
 
 (defn text-field [scr x y value focused?]
