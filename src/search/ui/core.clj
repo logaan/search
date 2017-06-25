@@ -64,4 +64,8 @@
   (let [scr (s/get-screen type)]
     (s/in-screen scr (input-loop scr))))
 
-#_(start :auto)
+(comment
+
+  (start :auto)
+
+  )

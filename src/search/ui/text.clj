@@ -13,12 +13,17 @@
 
 (defn input [input key]
   (case key
+    :escape      [:exit input]
     :enter       [:next input]
     :tab         [:next input]
-    :escape      [:exit input]
+    :down        [:next input]
     :reverse-tab [:prev input]
+    :up          [:prev input]
     :backspace   [:set (remove-last input)]
-    [:set (str input key)]))
+
+    (if (char? key)
+      [:set (str input key)]
+      [:set input])))
 
 (defn last-n [input length]
   (let [end   (count input)
