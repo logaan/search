@@ -1,6 +1,5 @@
-(ns search.core)
+(ns search.core
+  (:require [search.ui.core :as ui]))
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+(defn -main [& args]
+  (ui/start :text))

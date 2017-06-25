@@ -7,6 +7,10 @@
 (def fields
   [:dataset :field :query :table])
 
+(def key-style
+  {:fg :white
+   :bg :cyan})
+
 (defn draw [{:keys [dataset field query table index]} scr]
   (let [focus (fields index)]
     (doto scr
@@ -20,6 +24,12 @@
 
      (s/put-string 4 7 "Query:")
      (text/field 11 7 query (= :query focus))
+
+     (s/put-string 1 23 "    Quit       Next     Next           Previous")
+     (s/put-string 1 23 "Esc" key-style)
+     (s/put-string 10 23 "Enter" key-style)
+     (s/put-string 21 23 "Tab" key-style)
+     (s/put-string 30 23 "Shift-Tab" key-style)
 
      (s/redraw))))
 
@@ -50,12 +60,8 @@
            :next (update-in state [:index] move-index inc)
            :prev (update-in state [:index] move-index dec)))))))
 
-(defn start []
-  (let [scr (s/get-screen)]
+(defn start [type]
+  (let [scr (s/get-screen type)]
     (s/in-screen scr (input-loop scr))))
 
-(comment
-
-  (start)
-
-  )
+#_(start :auto)
