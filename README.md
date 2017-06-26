@@ -2,7 +2,7 @@
 
 This is Logan Campbell's implementation of the Zendesk search code challenge.
 
-[![asciicast](https://asciinema.org/a/ca1EBWVrljoYi3f2MEm62kvhs.png)](https://asciinema.org/a/ca1EBWVrljoYi3f2MEm62kvhs)
+[![asciicast](https://asciinema.org/a/FOxJpn8dXeEHTwhXYOmc1kaS9.png)](https://asciinema.org/a/FOxJpn8dXeEHTwhXYOmc1kaS9)
 
 ## Dependencies
 

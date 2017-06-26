@@ -21,7 +21,6 @@
 
 (defn text-fields [scr dataset field query focus]
   (doto scr
-    (s/clear)
     (s/put-string 1 2 "Dataset:")
     (text/field 11 2 dataset (= :dataset focus))
 
@@ -35,8 +34,9 @@
   (let [focus   (fields index)
         records (search-results state)]
     (doto scr
-     (heading)
-     (text-fields dataset field query focus)
-     (table/draw records table (= :table focus))
-     (bindings/draw)
-     (s/redraw))))
+      (s/clear)
+      (heading)
+      (text-fields dataset field query focus)
+      (table/draw records table (= :table focus))
+      (bindings/draw)
+      (s/redraw))))
