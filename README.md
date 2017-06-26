@@ -2,6 +2,8 @@
 
 This is Logan Campbell's implementation of the Zendesk search code challenge.
 
+[![asciicast](https://asciinema.org/a/ca1EBWVrljoYi3f2MEm62kvhs.png)](https://asciinema.org/a/ca1EBWVrljoYi3f2MEm62kvhs)
+
 ## Dependencies
 
 * Java 1.8

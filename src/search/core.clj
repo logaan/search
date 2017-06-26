@@ -6,9 +6,9 @@
             [search.input :as input]))
 
 (def initial-state
-  {:dataset "users"
-   :field   "_id"
-   :query   "71"
+  {:dataset ""
+   :field   ""
+   :query   ""
    :table   {:selected 0
              :expanded false}
    :index   0
