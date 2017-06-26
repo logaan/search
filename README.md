@@ -39,3 +39,11 @@ and any failures.
 
 Travis CI is being used for continuous integration. Contact Logan if you'd like
 access to [the build](https://travis-ci.com/logaan/search).
+
+## Code Coverage
+
+    ./scripts/coverage
+
+This command will run the test suite and let you know which lines of code were
+exercised. A colorful table will be printed to the screen and a html report will
+be created in `target/coverage/index.html`.
