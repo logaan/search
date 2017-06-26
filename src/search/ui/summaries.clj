@@ -1,5 +1,6 @@
 (ns search.ui.summaries
-  (:require [search.repositories.common :as common]))
+  (:require [search.repositories.common :as common]
+            [clojure.string :as str]))
 
 (defmulti header (fn [record] (:type (meta record))))
 
@@ -30,10 +31,18 @@
 (defmethod summarise :ticket [ticket]
   "ticket row")
 
-;;- organization ---------------------------------------------------------------
+(def organization-widths
+  [15 15 46])
+
+(def organization-format
+  (let [[n d dns] organization-widths]
+    (str "%-" n "s %-" d "s %-" dns "s")))
 
 (defmethod header :organization [_]
-  "organization header")
+  (format organization-format "Name" "Details" "Domain Names"))
 
-(defmethod summarise :organization [organization]
-  "organization row")
+(defmethod summarise :organization [{:strs [name details domain_names]}]
+  (let [[n d dns] organization-widths
+        f         common/first-n
+        joined-domains (str/join ", " domain_names)]
+    (format organization-format (f name n) (f details d) (f joined-domains dns))))
