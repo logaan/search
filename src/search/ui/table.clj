@@ -30,7 +30,11 @@
     (rows scr records selected focus?)))
 
 (defn move-row [state direction]
-  (update-in state [:selected] direction))
+  (update-in state [:selected]
+             (fn [row-number]
+               (->> (direction row-number)
+                    (max 0)
+                    (min 13)))))
 
 (defn prev-row [state]
   (move-row state dec))
