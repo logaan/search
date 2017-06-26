@@ -8,4 +8,5 @@
 
 (defn load-json []
   (->> (common/load-json "tickets.json")
-       (map parse-ticket-dates)))
+       (map parse-ticket-dates)
+       (map #(with-meta % {:type :ticket}))))

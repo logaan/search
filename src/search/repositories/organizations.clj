@@ -6,4 +6,5 @@
 
 (defn load-json []
   (->> (common/load-json "organizations.json")
-       (map parse-organization-dates)))
+       (map parse-organization-dates)
+       (map #(with-meta % {:type :organization}))))

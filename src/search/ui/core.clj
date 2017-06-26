@@ -2,6 +2,7 @@
   (:require [lanterna.screen :as s]
             [search.ui.text :as text]
             [search.ui.bindings :as bindings]
+            [search.repositories.users :as users]
             [search.ui.table :as table]))
 
 (def fields
@@ -22,10 +23,11 @@
     (text/field 11 4 query (= :query focus))))
 
 (defn draw [{:keys [dataset field query table index row]} scr]
-  (let [focus (fields index)]
+  (let [focus   (fields index)
+        records (users/load-json)]
     (doto scr
      (heading)
      (text-fields dataset field query focus)
-     (table/draw row (= :table focus))
+     (table/draw records row (= :table focus))
      (bindings/draw)
      (s/redraw))))
