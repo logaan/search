@@ -6,6 +6,12 @@ This is Logan Campbell's implementation of the Zendesk search code challenge.
 
 * Java 1.8
 
+If you run `java -version` you should see output like:
+
+    java version "1.8.0_25"
+    Java(TM) SE Runtime Environment (build 1.8.0_25-b17)
+    Java HotSpot(TM) 64-Bit Server VM (build 25.25-b02, mixed mode)
+
 Clojure, Leiningen (the build tool) and all project dependencies will be
 installed when you first run the application. Everything (including Clojure)
 will be installed as jars within your local Maven cache. This should not effect
