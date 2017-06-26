@@ -1,16 +1,13 @@
 (ns search.ui.core
   (:require [lanterna.screen :as s]
             [search.ui.text :as text]
+            [search.ui.bindings :as bindings]
             [search.repositories.users :as users]))
 
 ;;- specific drawing -----------------------------------------------------------
 
 (def fields
   [:dataset :field :query :table])
-
-(def key-style
-  {:fg :white
-   :bg :cyan})
 
 (def divider
   "------------------------------------------------------------------------------")
@@ -26,9 +23,10 @@
        (let [selected? (= selected-user index)]
          (s/put-string scr 1 line (users/summarise user)
                        (if selected? {:bg :white :fg :black}))
-         (if (and focus? selected?) (s/move-cursor scr 0 line)))))))
+         (if (and focus? selected?)
+           (s/move-cursor scr 0 line)))))))
 
-(defn draw [{:keys [dataset field query table index]} scr]
+(defn draw [{:keys [dataset field query table index row]} scr]
   (let [focus (fields index)]
     (doto scr
      (s/put-string 1 0 "Zendesk Search Coding Challenge" {:styles #{:bold}})
@@ -42,13 +40,9 @@
      (s/put-string 4 4 "Query:")
      (text/field 11 4 query (= :query focus))
 
-     (draw-users 1 (= :table focus))
+     (draw-users row (= :table focus))
 
-     (s/put-string 1 23 "    Quit       Next     Next           Previous")
-     (s/put-string 1 23 "Esc" key-style)
-     (s/put-string 10 23 "Enter" key-style)
-     (s/put-string 21 23 "Tab" key-style)
-     (s/put-string 30 23 "Shift-Tab" key-style)
+     (bindings/draw)
 
      (s/redraw))))
 
@@ -59,7 +53,8 @@
    :field   "_id"
    :query   "72"
    :table   {}
-   :index   0})
+   :index   0
+   :row     0})
 
 (defn move-index [index direction]
   (mod (direction index) (count fields)))
@@ -86,5 +81,5 @@
 (comment
 
   (start :auto)
-
+  
   )
