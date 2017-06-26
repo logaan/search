@@ -12,3 +12,17 @@
     1 dec 0
     2 dec 1
     3 dec 2))
+
+(deftest set-field-value
+  (let [state {:query "kittens"}]
+    (is (= {:query "puppies"}
+           (sut/perform-action state :set :query "puppies")))))
+
+(deftest move-index-as-action
+  (are [initial direction result]
+      (= {:index result}
+         (sut/perform-action {:index initial} direction :query "puppies"))
+    1 :next 2
+    3 :next 0
+    1 :prev 0
+    0 :prev 3))
