@@ -26,7 +26,7 @@
 
 (defn draw [{:keys [dataset field query table index row]} scr]
   (let [focus   (fields index)
-        records (organizations/load-json)]
+        records (tickets/load-json)]
     (doto scr
      (heading)
      (text-fields dataset field query focus)
