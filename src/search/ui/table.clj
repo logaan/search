@@ -24,28 +24,35 @@
 (defn detail [scr record]
   (if record (summaries/detail scr record)))
 
-(defn draw [scr records {:keys [selected expanded] :as table} focus?]
-  (if (empty? records)
-    (no-results/draw scr)
-    (if expanded
-     (detail scr (get records selected))
-     (rows scr records selected focus?))))
+(defn draw [scr records {:keys [selected expanded scroll]} focus?]
+  (let [scrolled (drop scroll records)]
+    (if (empty? records)
+     (no-results/draw scr)
+     (if expanded
+       (detail scr (get scrolled selected))
+       (rows scr scrolled selected focus?)))))
 
-(defn move-row [state direction]
-  (update-in state [:selected]
+(defn move-row [state field direction]
+  (update-in state [field]
              (fn [row-number]
                (->> (direction row-number)
                     (max 0)
                     (min 13)))))
 
 (defn prev-row [state]
-  (move-row state dec))
+  (move-row state :selected dec))
 
 (defn next-row [state]
-  (move-row state inc))
+  (move-row state :selected inc))
 
 (defn toggle-expand [state]
   (update-in state [:expanded] not))
+
+(defn scroll-down [state]
+  (move-row state :scroll inc))
+
+(defn scroll-up [state]
+  (move-row state :scroll dec))
 
 (defn input [state key]
   (case key
@@ -53,8 +60,8 @@
     :enter       [:set (toggle-expand state)]
     :tab         [:next state]
     :reverse-tab [:prev state]
-    :up          [:set (prev-row state)]
+    :up          [:set (scroll-up state)]
     \k           [:set (prev-row state)]
-    :down        [:set (next-row state)]
+    :down        [:set (scroll-down state)]
     \j           [:set (next-row state)]
     [:set state]))
