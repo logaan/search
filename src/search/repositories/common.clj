@@ -3,7 +3,6 @@
             [clojure.java.io :as io]
             [clj-time.format :as time]))
 
-
 (def date-time-format
   (time/formatter "y-M-d'T'k:m:s Z"))
 
