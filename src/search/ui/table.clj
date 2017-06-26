@@ -11,14 +11,19 @@
     (if (and focus? selected?)
       (s/move-cursor scr 0 line))))
 
-(defn draw [scr records selected-row focus?]
+(defn rows [scr records selected focus?]
   (let [lines   (range 8 22)
         indexes (range)]
     (s/put-string scr 1 6 (summaries/header (first records)))
     (s/put-string scr 1 7 divider)
     (dorun
      (for [[line index record] (map list lines indexes records)]
-       (row scr line focus? (= selected-row index) record)))))
+       (row scr line focus? (= selected index) record)))))
+
+(defn draw [scr records {:keys [selected expanded] :as table} focus?]
+  (if expanded
+    (s/put-string scr 1 6 "expanded")
+    (rows scr records selected focus?)))
 
 (defn move-row [state direction]
   (update-in state [:selected] direction))

@@ -30,6 +30,6 @@
     (doto scr
      (heading)
      (text-fields dataset field query focus)
-     (table/draw records (:selected table) (= :table focus))
+     (table/draw records table (= :table focus))
      (bindings/draw)
      (s/redraw))))
