@@ -1,6 +1,6 @@
-(ns search.core-test
+(ns search.input-test
   (:require [clojure.test :refer [deftest is are]]
-            [search.core :as sut]))
+            [search.input :as sut]))
 
 (deftest move-index-loops
   (are [initial direction result] (= result (sut/move-index initial direction))
