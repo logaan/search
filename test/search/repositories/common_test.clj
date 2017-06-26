@@ -13,3 +13,11 @@
 (deftest parse-date-time
   (is (= (utc-date-time 2016 4 15 5 19 46 -10)
          (sut/parse-date-time "2016-04-15T05:19:46 -10:00"))))
+
+(deftest finds-and-loads-json
+  (is (= 75 (count (sut/load-json "users.json")))))
+
+(deftest strips-tail-off-strings
+  (is (= "fo" (sut/first-n "foo" 2)))
+  (is (= "" (sut/first-n "" 2)))
+  (is (= "" (sut/first-n nil 2))))
