@@ -34,7 +34,7 @@
     (s/in-screen scr (input-loop scr))))
 
 (defn -main [& args]
-  (ui/start :text))
+  (start :text))
 
 
 (comment
