@@ -3,6 +3,8 @@
             [search.ui.text :as text]
             [search.ui.bindings :as bindings]
             [search.repositories.users :as users]
+            [search.repositories.tickets :as tickets]
+            [search.repositories.organizations :as organizations]
             [search.ui.table :as table]))
 
 (def fields
@@ -24,7 +26,7 @@
 
 (defn draw [{:keys [dataset field query table index row]} scr]
   (let [focus   (fields index)
-        records (users/load-json)]
+        records (organizations/load-json)]
     (doto scr
      (heading)
      (text-fields dataset field query focus)

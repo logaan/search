@@ -19,8 +19,7 @@
     (ui/draw state scr)
     (let [focus          (ui/fields (:index state))
           focus-value    (state focus)
-          [action value] (text/input focus-value
-                                     (s/get-key-blocking scr))]
+          [action value] (text/input focus-value (s/get-key-blocking scr))]
       (if (= :exit action)
         (println "exiting")
         (recur
