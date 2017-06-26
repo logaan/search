@@ -49,3 +49,7 @@ access to [the build](https://travis-ci.com/logaan/search).
 This command will run the test suite and let you know which lines of code were
 exercised. A colorful table will be printed to the screen and a html report will
 be created in `target/coverage/index.html`.
+
+All code without side effects has tests. Unfortunately the nature of a ncurses
+style terminal app makes testing the generated output impractical. Coverage will
+be about 70%.
