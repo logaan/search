@@ -29,10 +29,13 @@
 (defn next-row [state]
   (move-row state inc))
 
+(defn toggle-expand [state]
+  (update-in state [:expanded] not))
+
 (defn input [state key]
   (case key
     :escape      [:exit state]
-    :enter       [:next state]
+    :enter       [:set (toggle-expand state)]
     :tab         [:next state]
     :reverse-tab [:prev state]
     :up          [:set (prev-row state)]

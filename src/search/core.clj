@@ -8,7 +8,8 @@
   {:dataset "Users"
    :field   "_id"
    :query   "72"
-   :table   {:selected 0}
+   :table   {:selected 0
+             :expanded false}
    :index   0})
 
 (defn move-index [index direction]
