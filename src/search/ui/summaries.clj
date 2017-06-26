@@ -1,5 +1,6 @@
 (ns search.ui.summaries
-  (:require [search.repositories.common :as common]
+  (:require [lanterna.screen :as s]
+            [search.repositories.common :as common]
             [clojure.string :as str]))
 
 (def f common/first-n)
@@ -8,8 +9,16 @@
 
 (defmulti summarise (fn [record] (:type (meta record))))
 
-;;- user -----------------------------------------------------------------------
+(defmulti detail (fn [_ record] (:type (meta record))))
 
+(defn detail-map [scr record]
+  (dorun
+   (for [[line [key value]] (map list (range 6 22) record)]
+     (let [output (-> (format "%s: %s" key value)
+                      (common/first-n 78))]
+       (s/put-string scr 1 line output)))))
+
+;;- user -----------------------------------------------------------------------
 (def user-widths
   [20 15 9 31])
 
@@ -24,8 +33,10 @@
   (let [[n a r e] user-widths]
     (format user-format (f name n) (f alias a) (f role r) (f email e))))
 
-;;- ticket ---------------------------------------------------------------------
+(defmethod detail :user [scr user]
+  (detail-map scr user))
 
+;;- ticket ---------------------------------------------------------------------
 (def ticket-widths
   [9 9 8 49])
 
@@ -40,8 +51,10 @@
   (let [[t p st sj] ticket-widths]
     (format ticket-format (f type t) (f priority p) (f status st) (f subject sj))))
 
-;;- organization ---------------------------------------------------------------
+(defmethod detail :ticket [scr ticket]
+  (detail-map scr ticket))
 
+;;- organization ---------------------------------------------------------------
 (def organization-widths
   [15 15 46])
 
@@ -56,3 +69,6 @@
   (let [[n d dns] organization-widths
         joined-domains (str/join ", " domain_names)]
     (format organization-format (f name n) (f details d) (f joined-domains dns))))
+
+(defmethod detail :organization [scr organization]
+  (detail-map scr organization))

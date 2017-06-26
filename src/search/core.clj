@@ -2,15 +2,21 @@
   (:require [lanterna.screen :as s]
             [search.ui.text :as text]
             [search.ui.core :as ui]
+            [search.repositories.users :as users]
+            [search.repositories.tickets :as tickets]
+            [search.repositories.organizations :as organizations]
             [search.ui.table :as table]))
 
 (def initial-state
-  {:dataset "Users"
+  {:dataset "users"
    :field   "_id"
-   :query   "72"
+   :query   "71"
    :table   {:selected 0
              :expanded false}
-   :index   0})
+   :index   0
+   :data    {"users"         (delay (users/load-json))
+             "tickets"       (delay (tickets/load-json))
+             "organizations" (delay (organizations/load-json))}})
 
 (defn move-index [index direction]
   (mod (direction index) (count ui/fields)))
@@ -29,8 +35,7 @@
           handler        (field-types focus)
           key            (s/get-key-blocking scr)
           [action value] (handler focus-value key)]
-      (if (= :exit action)
-        (println "exiting")
+      (if (not= :exit action)
         (recur
          (case action
            :set  (assoc state focus value)

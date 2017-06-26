@@ -7,6 +7,12 @@
             [search.repositories.organizations :as organizations]
             [search.ui.table :as table]))
 
+(defn search-results [{:keys [dataset field query data]}]
+  (let [dataset (data dataset)]
+    (if dataset
+      (filter (fn [row] (= query (str (row field))))
+              @dataset))))
+
 (def fields
   [:dataset :field :query :table])
 
@@ -15,6 +21,7 @@
 
 (defn text-fields [scr dataset field query focus]
   (doto scr
+    (s/clear)
     (s/put-string 1 2 "Dataset:")
     (text/field 11 2 dataset (= :dataset focus))
 
@@ -24,9 +31,9 @@
     (s/put-string 4 4 "Query:")
     (text/field 11 4 query (= :query focus))))
 
-(defn draw [{:keys [dataset field query table index table]} scr]
+(defn draw [{:keys [dataset field query table index table] :as state} scr]
   (let [focus   (fields index)
-        records (tickets/load-json)]
+        records (search-results state)]
     (doto scr
      (heading)
      (text-fields dataset field query focus)
