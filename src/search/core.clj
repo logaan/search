@@ -1,25 +1,33 @@
 (ns search.core
   (:require [lanterna.screen :as s]
             [search.ui.text :as text]
-            [search.ui.core :as ui]))
+            [search.ui.core :as ui]
+            [search.ui.table :as table]))
 
 (def initial-state
   {:dataset "Users"
    :field   "_id"
    :query   "72"
-   :table   {}
-   :index   0
-   :row     0})
+   :table   {:selected 0}
+   :index   0})
 
 (defn move-index [index direction]
   (mod (direction index) (count ui/fields)))
+
+(def field-types
+  {:dataset text/input
+   :field   text/input
+   :query   text/input
+   :table   table/input})
 
 (defn input-loop [scr]
   (loop [state initial-state]
     (ui/draw state scr)
     (let [focus          (ui/fields (:index state))
           focus-value    (state focus)
-          [action value] (text/input focus-value (s/get-key-blocking scr))]
+          handler        (field-types focus)
+          key            (s/get-key-blocking scr)
+          [action value] (handler focus-value key)]
       (if (= :exit action)
         (println "exiting")
         (recur
@@ -38,5 +46,5 @@
 (comment
 
   (start :auto)
-
+  
   )

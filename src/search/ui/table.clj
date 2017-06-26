@@ -19,3 +19,24 @@
     (dorun
      (for [[line index record] (map list lines indexes records)]
        (row scr line focus? (= selected-row index) record)))))
+
+(defn move-row [state direction]
+  (update-in state [:selected] direction))
+
+(defn prev-row [state]
+  (move-row state dec))
+
+(defn next-row [state]
+  (move-row state inc))
+
+(defn input [state key]
+  (case key
+    :escape      [:exit state]
+    :enter       [:next state]
+    :tab         [:next state]
+    :reverse-tab [:prev state]
+    :up          [:set (prev-row state)]
+    \k           [:set (prev-row state)]
+    :down        [:set (next-row state)]
+    \j           [:set (next-row state)]
+    [:set state]))

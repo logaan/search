@@ -25,12 +25,6 @@
     (format user-format (f name n) (f alias a) (f role r) (f email e))))
 
 ;;- ticket ---------------------------------------------------------------------
-;; {
-;;  "type": "incident",
-;;  "priority": "high",
-;;  "status": "pending",
-;;  "subject": "A Catastrophe in Korea (North)",
-;;  }
 
 (def ticket-widths
   [9 9 8 49])

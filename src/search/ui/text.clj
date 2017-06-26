@@ -6,29 +6,29 @@
 (def text-field-opts
   {:styles #{:underline}})
 
-(defn remove-last [input]
-  (if (empty? input)
+(defn remove-last [text]
+  (if (empty? text)
     ""
-    (subs input 0 (dec (count input)))))
+    (subs text 0 (dec (count text)))))
 
-(defn input [input key]
+(defn input [text key]
   (case key
-    :escape      [:exit input]
-    :enter       [:next input]
-    :tab         [:next input]
-    :down        [:next input]
-    :reverse-tab [:prev input]
-    :up          [:prev input]
-    :backspace   [:set (remove-last input)]
+    :escape      [:exit text]
+    :enter       [:next text]
+    :tab         [:next text]
+    :down        [:next text]
+    :reverse-tab [:prev text]
+    :up          [:prev text]
+    :backspace   [:set (remove-last text)]
 
     (if (char? key)
-      [:set (str input key)]
-      [:set input])))
+      [:set (str text key)]
+      [:set text])))
 
-(defn last-n [input length]
-  (let [end   (count input)
+(defn last-n [text length]
+  (let [end   (count text)
         start (max (- end length) 0)]
-    (subs input start end)))
+    (subs text start end)))
 
 (defn blank-str [length]
   (apply str (take length (repeat " "))))

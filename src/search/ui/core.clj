@@ -24,12 +24,12 @@
     (s/put-string 4 4 "Query:")
     (text/field 11 4 query (= :query focus))))
 
-(defn draw [{:keys [dataset field query table index row]} scr]
+(defn draw [{:keys [dataset field query table index table]} scr]
   (let [focus   (fields index)
         records (tickets/load-json)]
     (doto scr
      (heading)
      (text-fields dataset field query focus)
-     (table/draw records row (= :table focus))
+     (table/draw records (:selected table) (= :table focus))
      (bindings/draw)
      (s/redraw))))
