@@ -15,14 +15,18 @@
 (def divider
   "------------------------------------------------------------------------------")
 
-(defn draw-users [scr]
-  (let [users (users/load-json)
-        lines (range 8 22)]
+(defn draw-users [scr selected-user focus?]
+  (let [users   (users/load-json)
+        lines   (range 8 22)
+        indexes (range)]
     (s/put-string scr 1 6 users/header)
     (s/put-string scr 1 7 divider)
     (dorun
-     (for [[line user] (map list lines users)]
-       (s/put-string scr 1 line (users/summarise user))))))
+     (for [[line index user] (map list lines indexes users)]
+       (let [selected? (= selected-user index)]
+         (s/put-string scr 1 line (users/summarise user)
+                       (if selected? {:bg :white :fg :black}))
+         (if (and focus? selected?) (s/move-cursor scr 0 line)))))))
 
 (defn draw [{:keys [dataset field query table index]} scr]
   (let [focus (fields index)]
@@ -38,7 +42,7 @@
      (s/put-string 4 4 "Query:")
      (text/field 11 4 query (= :query focus))
 
-     (draw-users)
+     (draw-users 1 (= :table focus))
 
      (s/put-string 1 23 "    Quit       Next     Next           Previous")
      (s/put-string 1 23 "Esc" key-style)
