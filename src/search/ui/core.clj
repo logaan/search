@@ -9,9 +9,10 @@
 
 (defn search-results [{:keys [dataset field query data]}]
   (let [dataset (data dataset)]
-    (if dataset
-      (filter (fn [row] (= query (str (row field))))
-              @dataset))))
+    (vec
+     (if dataset
+       (filter (fn [row] (= query (str (row field))))
+               @dataset)))))
 
 (def fields
   [:dataset :field :query :table])

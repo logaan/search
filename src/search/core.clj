@@ -6,12 +6,12 @@
             [search.input :as input]))
 
 (def initial-state
-  {:dataset ""
-   :field   ""
-   :query   ""
+  {:dataset "users"
+   :field   "_id"
+   :query   "71"
    :table   {:selected 0
              :expanded false}
-   :index   0
+   :index   3
    :data    {"users"         (delay (users/load-json))
              "tickets"       (delay (tickets/load-json))
              "organizations" (delay (organizations/load-json))}})

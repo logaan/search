@@ -22,13 +22,13 @@
        (row scr line focus? (= selected index) record)))))
 
 (defn detail [scr record]
-  (summaries/detail scr record))
+  (if record (summaries/detail scr record)))
 
 (defn draw [scr records {:keys [selected expanded] :as table} focus?]
   (if (empty? records)
     (no-results/draw scr)
     (if expanded
-     (detail scr (nth records selected))
+     (detail scr (get records selected))
      (rows scr records selected focus?))))
 
 (defn move-row [state direction]
