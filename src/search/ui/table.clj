@@ -20,9 +20,13 @@
      (for [[line index record] (map list lines indexes records)]
        (row scr line focus? (= selected index) record)))))
 
+(defn detail [scr record]
+  (println record)
+  (s/put-string scr 1 6 "expanded"))
+
 (defn draw [scr records {:keys [selected expanded] :as table} focus?]
   (if expanded
-    (s/put-string scr 1 6 "expanded")
+    (detail scr (nth records selected))
     (rows scr records selected focus?)))
 
 (defn move-row [state direction]
