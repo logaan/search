@@ -26,7 +26,7 @@
   (if record (summaries/detail scr record)))
 
 (defn draw [scr records {:keys [selected expanded scroll]} focus?]
-  (let [scrolled (drop scroll records)]
+  (let [scrolled (vec (drop scroll records))]
     (if (empty? records)
      (no-results/draw scr)
      (if expanded
