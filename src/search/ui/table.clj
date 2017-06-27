@@ -2,7 +2,8 @@
   (:require [lanterna.screen :as s]
             [search.ui.no-results :as no-results]
             [search.ui.summaries :as summaries]
-            [search.search :as search]))
+            [search.search :as search]
+            [search.ui.bindings :as bindings]))
 
 (def divider
   "------------------------------------------------------------------------------")
@@ -20,7 +21,8 @@
     (s/put-string scr 1 7 divider)
     (dorun
      (for [[line index record] (map list lines indexes records)]
-       (row scr line focus? (= selected index) record)))))
+       (row scr line focus? (= selected index) record)))
+    (if focus? (bindings/table scr))))
 
 (defn detail [scr record]
   (if record (summaries/detail scr record)))

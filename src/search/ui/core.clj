@@ -31,5 +31,4 @@
       (heading)
       (text-fields dataset field query focus)
       (table/draw records table (= :table focus))
-      (bindings/draw)
       (s/redraw))))

@@ -1,6 +1,7 @@
 (ns search.ui.text
   (:require [lanterna.screen :as s]
-            [search.ui.fields :as fields]))
+            [search.ui.fields :as fields]
+            [search.ui.bindings :as bindings]))
 
 (def field-length 40)
 
@@ -53,5 +54,6 @@
         cursor-x     (min end-of-text end-of-field)]
     (s/put-string scr x y (blank-str (inc field-length)) text-field-opts)
     (s/put-string scr x y (last-n value field-length) text-field-opts)
-    (if focused?
-      (s/move-cursor scr cursor-x y))))
+    (when focused?
+      (s/move-cursor scr cursor-x y)
+      (bindings/draw scr))))
