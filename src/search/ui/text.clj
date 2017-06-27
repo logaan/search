@@ -19,7 +19,10 @@
   (state (focus state)))
 
 (defn set-text [state new-text]
-  (assoc state (focus state) new-text))
+  (assoc state (focus state) new-text
+               :table {:selected 0
+                       :expanded false
+                       :scroll   0}))
 
 (defn input [state key]
   (let [text (find-text state)]

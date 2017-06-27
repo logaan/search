@@ -3,7 +3,11 @@
             [clojure.test :refer [deftest is are]]))
 
 (defn dataset [str]
-  {:dataset str :index 0})
+  {:dataset str
+   :index 0
+   :table {:selected 0
+           :expanded false
+           :scroll   0}})
 
 (deftest backspace-deletes-last
   (is (= [:set (dataset "fo")] (sut/input (dataset "foo") :backspace)))
