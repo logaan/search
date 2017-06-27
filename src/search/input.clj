@@ -15,7 +15,7 @@
 (defn move-index [index direction]
   (mod (direction index) fields/number))
 
-(defn perform-action [state action focus value]
+(defn perform-action [state action value]
   (case action
     :set  value
     :next (update-in state [:index] move-index inc)
@@ -30,4 +30,4 @@
           input          (s/get-key-blocking scr)
           [action value] (handler state input)]
       (if (not= :exit action)
-        (recur (perform-action state action focus value))))))
+        (recur (perform-action state action value))))))

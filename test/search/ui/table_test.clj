@@ -2,16 +2,19 @@
   (:require [search.ui.table :as sut]
             [clojure.test :refer [deftest is are]]))
 
+(defn table [selected expanded scroll]
+  {:table {:selected selected :expanded expanded :scroll scroll}})
+
 (deftest handles-input
-  (let [state {:selected 1 :expanded false :scroll 1}]
+  (let [state (table 1 false 1)]
     (are [input result] (= result (sut/input state input))
       :escape      [:exit state]
-      :enter       [:set {:selected 1 :expanded true :scroll 1}]
+      :enter       [:set (table 1 true 1)]
       :tab         [:next state]
       :reverse-tab [:prev state]
-      :up          [:set {:selected 1 :expanded false :scroll 0}]
-      \k           [:set {:selected 0 :expanded false :scroll 1}]
-      :down        [:set {:selected 1 :expanded false :scroll 2}]
-      \j           [:set {:selected 2 :expanded false :scroll 1}]
+      :up          [:set (table 1 false 0)]
+      \k           [:set (table 0 false 1)]
+      :down        [:set (table 1 false 2)]
+      \j           [:set (table 2 false 1)]
       \a           [:set state]
       \z           [:set state])))
