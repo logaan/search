@@ -1,7 +1,8 @@
 (ns search.ui.table
   (:require [lanterna.screen :as s]
             [search.ui.no-results :as no-results]
-            [search.ui.summaries :as summaries]))
+            [search.ui.summaries :as summaries]
+            [search.search :as search]))
 
 (def divider
   "------------------------------------------------------------------------------")
@@ -33,11 +34,12 @@
        (rows scr scrolled selected focus?)))))
 
 (defn move-row [state field direction]
-  (update-in state [:table field]
-             (fn [row-number]
-               (->> (direction row-number)
-                    (max 0)
-                    (min 13)))))
+  (let [last-result (dec (count (search/results state)))]
+    (update-in state [:table field]
+              (fn [row-number]
+                (->> (direction row-number)
+                     (max 0)
+                     (min 13 last-result))))))
 
 (defn prev-row [state]
   (move-row state :selected dec))
