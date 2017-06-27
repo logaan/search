@@ -1,5 +1,5 @@
-(ns search.ui.core-test
-  (:require [search.ui.core :as sut]
+(ns search.ui.search-test
+  (:require [search.search :as sut]
             [clojure.test :refer [deftest is are]]))
 
 (deftest search
@@ -12,4 +12,4 @@
                                 {"name" "baz" "age" 20}])}}]
     (is (= [{"name" "foo" "age" 20}
             {"name" "baz" "age" 20}]
-           (sut/search-results state)))))
+           (sut/results state)))))

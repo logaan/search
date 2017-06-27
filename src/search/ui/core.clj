@@ -6,16 +6,8 @@
             [search.repositories.tickets :as tickets]
             [search.repositories.organizations :as organizations]
             [search.ui.table :as table]
-            [search.ui.fields :as fields]))
-
-(def search-results
-  (memoize
-   (fn [{:keys [dataset field query data]}]
-     (let [dataset (data dataset)]
-       (vec
-        (if dataset
-          (filter (fn [row] (= query (str (row field))))
-                  @dataset)))))))
+            [search.ui.fields :as fields]
+            [search.search :as search]))
 
 (defn heading [scr]
   (s/put-string scr 1 0 "Zendesk Search Coding Challenge" {:styles #{:bold}}))
@@ -33,7 +25,7 @@
 
 (defn draw [{:keys [dataset field query table index table] :as state} scr]
   (let [focus   (fields/order index)
-        records (search-results state)]
+        records (search/results state)]
     (doto scr
       (s/clear)
       (heading)
