@@ -40,7 +40,7 @@ up beginners.
   datastructure. It is mostly used in `defn`, `let`, and `for` blocks. Here are
   some examples:
 
-```
+```clojure
      (let [point [10 12]
            [x y] point]
        (println x)
