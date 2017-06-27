@@ -3,11 +3,17 @@
             [clojure.test :refer [deftest is are]]))
 
 (defn table [selected expanded scroll]
-  {:table {:selected selected :expanded expanded :scroll scroll}})
+  {:table {:selected selected
+           :expanded expanded
+           :scroll scroll}
+   :dataset "users"
+   :field "_id"
+   :query 72
+   :data {"users" (delay [{"_id" 72}])}})
 
 (deftest handles-input
   (let [state (table 1 false 1)]
-    (are [input result] (= result (sut/input state input))
+    (are [input result] (= (:table result) (:table (sut/input state input)))
       :escape      [:exit state]
       :enter       [:set (table 1 true 1)]
       :tab         [:next state]
