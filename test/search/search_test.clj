@@ -1,4 +1,4 @@
-(ns search.ui.search-test
+(ns search.search-test
   (:require [search.search :as sut]
             [clojure.test :refer [deftest is are]]))
 
