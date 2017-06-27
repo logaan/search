@@ -1,3 +1,3 @@
 # Introduction to search
 
-TODO: write [great documentation](http://jacobian.org/writing/what-to-write/)
+Hi there. Thanks for reviewing my code.

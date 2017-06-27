@@ -25,7 +25,8 @@
     (if focus? (bindings/table scr))))
 
 (defn detail [scr record]
-  (if record (summaries/detail scr record)))
+  (if record (summaries/detail scr record))
+  (bindings/detail scr))
 
 (defn draw [scr records {:keys [selected expanded scroll]} focus?]
   (let [scrolled (vec (drop scroll records))]

@@ -7,13 +7,13 @@
             [clojure.tools.namespace.repl :refer [refresh]]))
 
 (def initial-state
-  {:dataset "users"
-   :field   "_id"
-   :query   "71"
+  {:dataset ""
+   :field   ""
+   :query   ""
    :table   {:selected 0
              :expanded false
              :scroll   0}
-   :index   3
+   :index   0
    :data    {"users"         (delay (users/load-json))
              "tickets"       (delay (tickets/load-json))
              "organizations" (delay (organizations/load-json))}})

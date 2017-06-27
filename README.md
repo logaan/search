@@ -2,7 +2,7 @@
 
 This is Logan Campbell's implementation of the Zendesk search code challenge.
 
-[![asciicast](https://asciinema.org/a/FOxJpn8dXeEHTwhXYOmc1kaS9.png)](https://asciinema.org/a/FOxJpn8dXeEHTwhXYOmc1kaS9)
+[![asciicast](https://asciinema.org/a/XoNtS0XFdjzsweKfi7TIwTdbL.png)](https://asciinema.org/a/XoNtS0XFdjzsweKfi7TIwTdbL)
 
 ## Dependencies
 
@@ -53,3 +53,9 @@ be created in `target/coverage/index.html`.
 All code without side effects has tests. Unfortunately the nature of a ncurses
 style terminal app makes testing the generated output impractical. Coverage will
 be about 70%.
+
+## Documentation
+
+There are some notes on the implementation and it's shortcomings in the `doc/`
+directory. Reading `into.md` may help you to read the source code if Clojure is
+new to you.
