@@ -3,8 +3,7 @@
             [search.ui.core :as ui]
             [search.ui.text :as text]
             [search.ui.table :as table]
-            [search.ui.fields :as fields]
-            [clojure.pprint :refer [pprint]]))
+            [search.ui.fields :as fields]))
 
 (def field-types
   {:dataset text/input
@@ -23,7 +22,6 @@
 
 (defn listen [scr initial-state]
   (loop [state initial-state]
-    (pprint (assoc state :data nil))
     (ui/draw state scr)
     (let [focus          (fields/order (:index state))
           handler        (field-types focus)

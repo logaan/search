@@ -8,12 +8,14 @@
             [search.ui.table :as table]
             [search.ui.fields :as fields]))
 
-(defn search-results [{:keys [dataset field query data]}]
-  (let [dataset (data dataset)]
-    (vec
-     (if dataset
-       (filter (fn [row] (= query (str (row field))))
-               @dataset)))))
+(def search-results
+  (memoize
+   (fn [{:keys [dataset field query data]}]
+     (let [dataset (data dataset)]
+       (vec
+        (if dataset
+          (filter (fn [row] (= query (str (row field))))
+                  @dataset)))))))
 
 (defn heading [scr]
   (s/put-string scr 1 0 "Zendesk Search Coding Challenge" {:styles #{:bold}}))
