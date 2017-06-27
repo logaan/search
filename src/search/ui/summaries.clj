@@ -10,11 +10,12 @@
 (defmulti detail (fn [_ record] (:type (meta record))))
 
 (defn detail-map [scr record]
+  (s/move-cursor scr 0 0)
   (dorun
-   (for [[line [key value]] (map list (range 6 22) record)]
-     (let [output (-> (format "%s: %s" key value)
+   (for [[line [key value]] (map list (range 2 22) record)]
+     (let [output (-> (format "%16s: %-80s" key value)
                       (common/first-n 78))]
-       (s/put-string scr 1 line output)))))
+       (s/put-string scr 0 line output)))))
 
 (defn column-summary [values widths]
   (let [pattern (str/join " " (map #(str "%-" % "s") widths))

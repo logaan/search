@@ -1,15 +1,18 @@
 (ns search.ui.no-results
   (:require [lanterna.screen :as s]))
 
+; 19
 (def user-fields
   ["_id active alias created_at email external_id last_login_at locale name"
    "organization_id phone role shared signature suspended tags timezone url"
    "verified"])
 
+; 16
 (def ticket-fields
   ["_id assignee_id created_at description due_at external_id has_incidents"
    "organization_id priority status subject submitter_id tags type url via"])
 
+; 9
 (def organization-fields
   ["_id created_at details domain_names external_id name shared_tickets tags"
    "url"])

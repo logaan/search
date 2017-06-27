@@ -25,9 +25,11 @@
 (defn -main [& args]
   (start :text))
 
-(defn refresh-start []
-  (refresh)
+(defn dev-start []
   (start :auto))
+
+(defn refresh-start []
+  (refresh :after 'search.core/dev-start))
 
 (comment
 
