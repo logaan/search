@@ -1,5 +1,6 @@
 (ns search.ui.text
-  (:require [lanterna.screen :as s]))
+  (:require [lanterna.screen :as s]
+            [search.ui.fields :as fields]))
 
 (def field-length 40)
 
@@ -11,19 +12,29 @@
     ""
     (subs text 0 (dec (count text)))))
 
-(defn input [text key]
-  (case key
-    :escape      [:exit text]
-    :enter       [:next text]
-    :tab         [:next text]
-    :down        [:next text]
-    :reverse-tab [:prev text]
-    :up          [:prev text]
-    :backspace   [:set (remove-last text)]
+(defn focus [state]
+  (fields/order (:index state)))
 
-    (if (char? key)
-      [:set (str text key)]
-      [:set text])))
+(defn find-text [state]
+  (state (focus state)))
+
+(defn set-text [state new-text]
+  (assoc state (focus state) new-text))
+
+(defn input [state key]
+  (let [text (find-text state)]
+    (case key
+      :escape      [:exit state]
+      :enter       [:next state]
+      :tab         [:next state]
+      :down        [:next state]
+      :reverse-tab [:prev state]
+      :up          [:prev state]
+      :backspace   [:set (set-text state (remove-last text))]
+
+      (if (char? key)
+        [:set (set-text state (str text key))]
+        [:set state]))))
 
 (defn last-n [text length]
   (let [end   (count text)

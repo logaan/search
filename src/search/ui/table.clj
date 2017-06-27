@@ -33,7 +33,7 @@
        (rows scr scrolled selected focus?)))))
 
 (defn move-row [state field direction]
-  (update-in state [field]
+  (update-in state [:table field]
              (fn [row-number]
                (->> (direction row-number)
                     (max 0)
@@ -46,7 +46,7 @@
   (move-row state :selected inc))
 
 (defn toggle-expand [state]
-  (update-in state [:expanded] not))
+  (update-in state [:table :expanded] not))
 
 (defn scroll-down [state]
   (move-row state :scroll inc))

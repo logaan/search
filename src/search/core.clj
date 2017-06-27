@@ -3,15 +3,16 @@
             [search.repositories.users :as users]
             [search.repositories.tickets :as tickets]
             [search.repositories.organizations :as organizations]
-            [search.input :as input]))
+            [search.input :as input]
+            [clojure.tools.namespace.repl :refer [refresh]]))
 
 (def initial-state
-  {:dataset "tickets"
-   :field   ""
-   :query   ""
+  {:dataset "users"
+   :field   "_id"
+   :query   "71"
    :table   {:selected 0
              :expanded false
-             :scroll   1}
+             :scroll   0}
    :index   3
    :data    {"users"         (delay (users/load-json))
              "tickets"       (delay (tickets/load-json))
@@ -24,8 +25,12 @@
 (defn -main [& args]
   (start :text))
 
+(defn refresh-start []
+  (refresh)
+  (start :auto))
+
 (comment
 
-  (start :auto)
+  (refresh-start)
 
   )
